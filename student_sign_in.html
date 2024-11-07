@@ -14,7 +14,7 @@
 <body>
 <div id="app">
 
-    <!-- Display form errors -->
+    <!-- Display errors -->
     <div id="new-student-form-errors" class="m-2">
         <div class="alert alert-danger" v-if="formErrors.length > 0">
             <li v-for="error in formErrors" v-bind:key="error">
@@ -101,7 +101,7 @@
             const newStudentName = ref('');
             const newStarID = ref('');
 
-            // List of students - two example students applied
+            // Two example students applied for reference
             const studentList = ref([
                 { name: 'A. Student', starID: 'aa1234aa', present: false },
                 { name: 'B. Student', starID: 'bb1234bb', present: false }
@@ -110,7 +110,7 @@
             // Array to store form validation errors
             const formErrors = ref([]);
 
-            // Stores the most recent student who arrived or left for displaying a welcome/goodbye message
+            // Stores the most recent student who arrived or left
             const mostRecentStudent = ref({});
 
             // Function to add a new student after validation
@@ -126,7 +126,7 @@
                     formErrors.value.push('StarID must be entered');
                 }
 
-                // If no errors, add student to the list
+                // If there are no errors, add student to the list
                 if (formErrors.value.length === 0) {
                     const student = { name: newStudentName.value, starID: newStarID.value, present: false };
                     studentList.value.push(student);
@@ -135,19 +135,19 @@
                 }
             };
 
-            // Function called when attendance checkbox changes, setting mostRecentStudent
+            // Function called when attendance checkbox changes
             const arrivedOrLeft = (student) => {
                 mostRecentStudent.value = student;
             };
 
-            // Function to delete a student from the list after confirmation
+            // Function to delete a student from the list
             const deleteStudent = (studentToDelete) => {
                 if (confirm(`Delete ${studentToDelete.name}?`)) {    //confirms if deleting is wanted
                     studentList.value = studentList.value.filter(student => student !== studentToDelete);
                 }
             };
 
-            // Computed property to sort students alphabetically by name
+            // Computed property to sort students alphabetically
             const sortedStudents = computed(() => {
                 return studentList.value.toSorted((student1, student2) => {
                     return student1.name.localeCompare(student2.name);
