@@ -28,7 +28,7 @@
 
     <h2>Add Students</h2>
 
-    <!-- Display errors if any -->
+    <!-- Show errors -->
     <div v-if="errors.length" class="error">
         <ul>
             <li v-for="error in errors" :key="error">{{ error }}</li>
@@ -53,46 +53,46 @@
         <span id="student-count">{{ studentCount }}</span>
         student(s) in the club.</p>
 
-    <!-- Display student list with selection option -->
+    
     <ul id="student-list">
         <li v-for="student in studentList" v-on:click="selectOrUnselectStudent(student)" :class="{ selected: student.selected }">
             {{ student.name }}, ID: {{ student.id }}, GPA: {{ student.gpa }}
         </li>
     </ul>
 
-    <!-- Button to remove selected students -->
+    <!-- Remove selected students -->
     <button v-on:click="removeSelectedStudents" id="remove-selected-students">Remove selected students</button>
 
-</div> <!-- end of div#app -->
+</div>
 
 <script>
     const { createApp, ref, computed } = Vue
 
     createApp({
         setup() {
-            // Define refs for the student list and form inputs
+            // Refs for the student list and inputs
             const studentList = ref([]);
             const newStudentName = ref('');
             const newStudentId = ref('');
             const newStudentGpa = ref('');
             const errors = ref([]);
 
-            // Computed property for student count
+            
             const studentCount = computed(() => studentList.value.length);
 
-            // Function to add a new student
+            // Add a new student
             const addNewStudent = () => {
                 errors.value = []; // Reset errors
 
-                // Validate inputs
+                // Validating inputs
                 if (!newStudentName.value) errors.value.push("Student name is required.");
                 if (!newStudentId.value) errors.value.push("Student ID is required.");
                 if (!newStudentGpa.value || newStudentGpa.value < 0 || newStudentGpa.value > 4) errors.value.push("GPA must be between 0 and 4.");
 
-                // Show errors if any
+                
                 if (errors.value.length > 0) return;
 
-                // Add new student
+                
                 studentList.value.push({
                     name: newStudentName.value,
                     id: newStudentId.value,
@@ -106,17 +106,17 @@
                 newStudentGpa.value = '';
             };
 
-            // Function to remove selected students
+            // Remove selected students
             const removeSelectedStudents = () => {
                 studentList.value = studentList.value.filter(student => !student.selected);
             };
 
-            // Function to toggle the selection of a student
+            // Toggle the selection of a student
             const selectOrUnselectStudent = (student) => {
                 student.selected = !student.selected;
             };
 
-            // Return all refs, computed, and methods
+          
             return {
                 newStudentName,
                 newStudentId,
